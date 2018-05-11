@@ -4,7 +4,7 @@ environment:
   matrix:
     - PYTHON: "C:\\Python35-x64"
   install:
-    - "SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%"
+    - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
     - python --version
     - pip install sklearn
     - pip install scipy
