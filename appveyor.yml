@@ -1,0 +1,22 @@
+environment:
+  global:
+      PROJECT_NAME: ImageSeg-KMeans
+  matrix:
+    - PYTHON: "C:\\Python35-x64"
+  install:
+    - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+    # Check that we have the expected version and architecture for Python
+    - "python --version"
+    - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+    - pip install sklearn
+    - pip install scipy
+  before_deploy:
+    - python imageSegmentation.py 2 output\burma.jpg output\burma_processed.jpg
+    - appveyor PushArtifact output\burma_processed.jpg
+  deploy:
+      provider: GitHub
+      auth_token:
+          secure: K1giXZm3fvqp7Jum9ZXZDGx/Y6MlrsWFyvnDkULHQAt3rxGC69qyoUSoMgyh3+ZA
+      artifact: /.*\.jpg/
+      repository: alanpoon/ImageSeg-KMeans
+      draft: true
