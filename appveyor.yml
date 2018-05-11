@@ -4,10 +4,8 @@ environment:
   matrix:
     - PYTHON: "C:\\Python35-x64"
   install:
-    - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-    # Check that we have the expected version and architecture for Python
-    - "python --version"
-    - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+    - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
+    - python --version
     - pip install sklearn
     - pip install scipy
   before_deploy:
