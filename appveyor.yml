@@ -27,6 +27,7 @@ install:
   # Upgrade to the latest pip.
   - 'python -m pip install -U pip setuptools wheel'
 
+build: false
 before_deploy:
   - python imageSegmentation.py 2 output\burma.jpg output\burma_processed.jpg
   - appveyor PushArtifact output\burma_processed.jpg
