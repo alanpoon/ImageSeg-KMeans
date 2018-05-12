@@ -1,20 +1,39 @@
+
+clone_depth: 50
 environment:
   global:
-      PROJECT_NAME: ImageSeg-KMeans
+      PROJECT_NAME: hardback_server
   matrix:
-    - PYTHON: "C:\\Python35-x64"
-  install:
-    - ps: "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-    - python --version
-    - pip install sklearn
-    - pip install scipy
-  before_deploy:
-    - python imageSegmentation.py 2 output\burma.jpg output\burma_processed.jpg
-    - appveyor PushArtifact output\burma_processed.jpg
-  deploy:
-      provider: GitHub
-      auth_token:
-          secure: K1giXZm3fvqp7Jum9ZXZDGx/Y6MlrsWFyvnDkULHQAt3rxGC69qyoUSoMgyh3+ZA
-      artifact: /.*\.jpg/
-      repository: alanpoon/ImageSeg-KMeans
-      draft: true
+
+    - PYTHON: C:\Python36
+      PYTHON_VERSION: 3.6
+      PYTHON_ARCH: 32
+
+cache:
+  # Cache downloaded pip packages and built wheels.
+  - '%LOCALAPPDATA%\pip\Cache\http'
+  - '%LOCALAPPDATA%\pip\Cache\wheels'
+
+install:
+  - C:\cygwin\bin\du -hs "%LOCALAPPDATA%\pip\Cache"
+  # Prepend newly installed Python to the PATH of this build (this cannot be
+  # done from inside the powershell script as it would require to restart
+  # the parent CMD process).
+  - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+
+  # Check that we have the expected version and architecture for Python
+  - python --version
+
+  # Upgrade to the latest pip.
+  - 'python -m pip install -U pip setuptools wheel'
+
+before_deploy:
+  - python imageSegmentation.py 2 output\burma.jpg output\burma_processed.jpg
+  - appveyor PushArtifact output\burma_processed.jpg
+deploy:
+    provider: GitHub
+    auth_token:
+        secure: K1giXZm3fvqp7Jum9ZXZDGx/Y6MlrsWFyvnDkULHQAt3rxGC69qyoUSoMgyh3+ZA
+    artifact: /.*\.jpg/
+    repository: alanpoon/ImageSeg-KMeans
+    draft: true
