@@ -27,6 +27,7 @@ install:
   - pip install numpy
   - pip install sklearn
   - pip install SciPy
+  - pip install PIL
 
 build: false
 before_deploy:
