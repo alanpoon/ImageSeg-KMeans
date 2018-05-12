@@ -5,9 +5,7 @@ environment:
       PROJECT_NAME: hardback_server
   matrix:
 
-    - PYTHON: C:\Python36
-      PYTHON_VERSION: 3.6
-      PYTHON_ARCH: 32
+    - PYTHON: C:\Python27.10
 
 cache:
   # Cache downloaded pip packages and built wheels.
