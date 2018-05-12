@@ -31,7 +31,7 @@ install:
 
 build: false
 before_deploy:
-  - python imageSegmentation.py 2 output\burma.jpg output\burma_processed.jpg
+  - python imageSegmentation.py 3 output\burma.jpg output\burma_processed.jpg
   - appveyor PushArtifact output\burma_processed.jpg
 deploy:
     provider: GitHub
